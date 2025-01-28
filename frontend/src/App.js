@@ -6,9 +6,11 @@ import Preview from "./components/Preview";
 import PackageInstaller from "./components/PackageInstaller";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
-import Logout from "./components/Logout";  // Import the Logout component
+import Logout from "./components/Logout"; // Import the Logout component
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import "bootstrap/dist/css/bootstrap.min.css";  // Import Bootstrap styles
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
+
+const BACKEND_URL = "https://playcode-g265.onrender.com"; // Updated Backend URL
 
 const inbuiltCode = `<!DOCTYPE html>
 <html>
@@ -36,7 +38,7 @@ const App = () => {
     if (isAuthenticated) {
       const fetchCode = async () => {
         try {
-          const response = await axios.get("http://localhost:5001/api/code", {
+          const response = await axios.get(`${BACKEND_URL}/api/code`, {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           });
           if (response.data.length > 0) {
@@ -56,7 +58,7 @@ const App = () => {
       const saveCode = async () => {
         try {
           await axios.post(
-            "http://localhost:5001/api/code/save",
+            `${BACKEND_URL}/api/code/save`,
             { code },
             { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
           );
@@ -95,7 +97,6 @@ const App = () => {
   };
 
   const saveCode = () => {
-    // Add your save logic here if needed (e.g., send to backend, localStorage, etc.)
     alert("Code Saved!");
   };
 
@@ -108,7 +109,7 @@ const App = () => {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/logout" element={<Logout />} /> {/* Add the Logout route */}
+        <Route path="/logout" element={<Logout />} />
         <Route
           path="/editor"
           element={

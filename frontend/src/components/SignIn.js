@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "./Auth.css"; // Import CSS for styling
 
+const BACKEND_URL = "https://playcode-g265.onrender.com"; // Updated Backend URL
+
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +13,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5001/api/auth/signin", {
+      const response = await axios.post(`${BACKEND_URL}/api/auth/signin`, {
         email,
         password,
       });
