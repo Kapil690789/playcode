@@ -10,6 +10,7 @@ const SignIn = ({ setIsAuthenticated }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // Handle the form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -23,6 +24,28 @@ const SignIn = ({ setIsAuthenticated }) => {
     } catch (err) {
       console.error("Sign-in failed:", err);
     }
+  };
+
+  // Handle guest login with predefined credentials
+  const handleGuestLogin = () => {
+    // Predefined credentials for guest login
+    const guestEmail = "kapil@gmail.com";
+    const guestPassword = "12345678";
+
+    // Simulating a successful login by sending guest credentials
+    axios
+      .post(`${BACKEND_URL}/api/auth/signin`, {
+        email: guestEmail,
+        password: guestPassword,
+      })
+      .then((response) => {
+        localStorage.setItem("token", response.data.token); // Store the token
+        setIsAuthenticated(true); // Update authentication state
+        navigate("/editor"); // Redirect to the editor page
+      })
+      .catch((err) => {
+        console.error("Guest login failed:", err);
+      });
   };
 
   return (
@@ -48,6 +71,11 @@ const SignIn = ({ setIsAuthenticated }) => {
       <p>
         Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>
+
+      {/* Guest Login Button */}
+      <button onClick={handleGuestLogin} className="guest-login-btn">
+        Login as Guest
+      </button>
     </div>
   );
 };
