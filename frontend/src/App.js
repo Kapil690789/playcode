@@ -29,9 +29,15 @@ const inbuiltCode = `<!DOCTYPE html>
 </html>`;
 
 const App = () => {
-  const isAuthenticated = !!localStorage.getItem("token");
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
   const [code, setCode] = useState(inbuiltCode);
   const [theme, setTheme] = useState("dark");
+
+  // Check authentication on mount
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   // Fetch saved code from the backend on component mount
   useEffect(() => {
@@ -104,62 +110,58 @@ const App = () => {
     setCode(""); // Clear the editor
   };
 
+  const EditorComponent = () => (
+    <div className={`app ${theme}`}>
+      <h1 className="text-center mb-4">Playcode HTML Editor Clone</h1>
+      <div className="d-flex justify-content-center gap-3 mb-4">
+        <button className="btn btn-primary" onClick={toggleTheme}>
+          Switch to {theme === "dark" ? "Light" : "Dark"} Mode
+        </button>
+        <button className="btn btn-success" onClick={exportCode}>
+          Export Code
+        </button>
+        <button className="btn btn-danger" onClick={clearCode}>
+          Clear Code
+        </button>
+        <button className="btn btn-warning" onClick={saveCode}>
+          Save Code
+        </button>
+        <Link to="/logout">
+          <button className="btn btn-secondary">Logout</button>
+        </Link>
+      </div>
+
+      <div className="editor-preview-container d-flex gap-4">
+        <PanelGroup direction="horizontal">
+          <Panel>
+            <div className="editor-container p-3 border">
+              <CodeEditor code={code} setCode={setCode} theme={theme} />
+            </div>
+          </Panel>
+          <PanelResizeHandle className="resize-handle" />
+          <Panel>
+            <div className="preview-container p-3 border">
+              <Preview code={code} />
+            </div>
+          </Panel>
+        </PanelGroup>
+      </div>
+
+      <PackageInstaller onInstall={handleInstallPackage} />
+    </div>
+  );
+
   return (
     <Router>
-      {/* Main routes */}
       <Routes>
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/logout" element={<Logout />} />
+        <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
         <Route
           path="/editor"
-          element={
-            isAuthenticated ? (
-              <div className={`app ${theme}`}>
-                <h1 className="text-center mb-4">Playcode HTML Editor Clone</h1>
-                <div className="d-flex justify-content-center gap-3 mb-4">
-                  <button className="btn btn-primary" onClick={toggleTheme}>
-                    Switch to {theme === "dark" ? "Light" : "Dark"} Mode
-                  </button>
-                  <button className="btn btn-success" onClick={exportCode}>
-                    Export Code
-                  </button>
-                  <button className="btn btn-danger" onClick={clearCode}>
-                    Clear Code
-                  </button>
-                  <button className="btn btn-warning" onClick={saveCode}>
-                    Save Code
-                  </button>
-                  <Link to="/logout">
-                    <button className="btn btn-secondary">Logout</button>
-                  </Link>
-                </div>
-
-                <div className="editor-preview-container d-flex gap-4">
-                  <PanelGroup direction="horizontal">
-                    <Panel>
-                      <div className="editor-container p-3 border">
-                        <CodeEditor code={code} setCode={setCode} theme={theme} />
-                      </div>
-                    </Panel>
-                    <PanelResizeHandle className="resize-handle" />
-                    <Panel>
-                      <div className="preview-container p-3 border">
-                        <Preview code={code} />
-                      </div>
-                    </Panel>
-                  </PanelGroup>
-                </div>
-
-                <PackageInstaller onInstall={handleInstallPackage} />
-              </div>
-            ) : (
-              <Navigate to="/signin" />
-            )
-          }
+          element={isAuthenticated ? <EditorComponent /> : <Navigate to="/signin" />}
         />
+        <Route path="/logout" element={<Logout setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/" element={<Navigate to="/signin" />} />
-        {/* Catch-all route to handle undefined routes */}
         <Route path="*" element={<Navigate to="/signin" />} />
       </Routes>
     </Router>

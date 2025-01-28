@@ -5,7 +5,7 @@ import "./Auth.css"; // Import CSS for styling
 
 const BACKEND_URL = "https://playcode-g265.onrender.com"; // Updated Backend URL
 
-const SignIn = () => {
+const SignIn = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -18,7 +18,8 @@ const SignIn = () => {
         password,
       });
       localStorage.setItem("token", response.data.token); // Store the token
-      navigate("/editor"); // Redirect to the editor page after successful sign-in
+      setIsAuthenticated(true); // Update authentication state
+      navigate("/editor"); // Redirect to the editor page
     } catch (err) {
       console.error("Sign-in failed:", err);
     }
