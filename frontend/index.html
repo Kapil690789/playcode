@@ -1,25 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>React App</title>
-
-  <!-- Add the base tag to make sure assets are loaded correctly from /frontend -->
-  <base href="/signin" />
-
-  <!-- Include the CSS file generated during the build process -->
-  <link rel="stylesheet" href="%PUBLIC_URL%/styles.css" />
-</head>
-
-<body>
-  <div id="root"></div>
-
-  <!-- This will load the React app from the bundled JavaScript -->
-  <script src="%PUBLIC_URL%/static/js/bundle.js"></script>
-  <script src="%PUBLIC_URL%/static/js/0.chunk.js"></script>
-  <script src="%PUBLIC_URL%/static/js/main.chunk.js"></script>
-</body>
-
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playcode</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- External scripts -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="//code.tidio.co/p3drfgmv6hpqs5ce6almy30a6bz7s1og.js" async></script>
+    <!-- Load React app -->
+    <script type="module" src="/src/index.js"></script>
+  </body>
 </html>

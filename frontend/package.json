@@ -1,7 +1,6 @@
 {
   "name": "playcode",
   "version": "0.1.0",
-  "homepage": "/frontend",
 
   "dependencies": {
     "axios": "^1.7.9",
