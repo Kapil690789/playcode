@@ -105,7 +105,7 @@ const App = () => {
   };
 
   return (
-    <Router basename="/frontend">
+    <Router>
       {/* Main routes */}
       <Routes>
         <Route path="/signup" element={<SignUp />} />
