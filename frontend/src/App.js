@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import CodeEditor from "./components/CodeEditor";
 import Preview from "./components/Preview";
 import PackageInstaller from "./components/PackageInstaller";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
+import Logout from "./components/Logout";  // Import the Logout component
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import "bootstrap/dist/css/bootstrap.min.css";  // Import Bootstrap styles
 
@@ -107,6 +108,7 @@ const App = () => {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/logout" element={<Logout />} /> {/* Add the Logout route */}
         <Route
           path="/editor"
           element={
@@ -126,6 +128,9 @@ const App = () => {
                   <button className="btn btn-warning" onClick={saveCode}>
                     Save Code
                   </button>
+                  <Link to="/logout">
+                    <button className="btn btn-secondary">Logout</button>
+                  </Link>
                 </div>
 
                 <div className="editor-preview-container d-flex gap-4">

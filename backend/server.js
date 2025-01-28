@@ -27,7 +27,5 @@ mongoose
 app.use("/api/auth", authRoutes); // Handles authentication (SignUp/SignIn)
 app.use("/api", codeRoutes); // Handles code-related operations
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Export the app for Vercel
+module.exports = app;
