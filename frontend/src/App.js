@@ -105,7 +105,8 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <Router basename="/frontend">
+      {/* Main routes */}
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
@@ -158,6 +159,8 @@ const App = () => {
           }
         />
         <Route path="/" element={<Navigate to="/signin" />} />
+        {/* Catch-all route to handle undefined routes */}
+        <Route path="*" element={<Navigate to="/signin" />} />
       </Routes>
     </Router>
   );
