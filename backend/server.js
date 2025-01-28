@@ -32,12 +32,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Playcode Backend API!");
 });
 
-// Start the server only when not in Vercel or another serverless environment
-if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
-}
+// Start the server on Render (or any other hosting platform)
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 
-// Export the app for Vercel (or any other serverless platform)
+// Export the app
 module.exports = app;
